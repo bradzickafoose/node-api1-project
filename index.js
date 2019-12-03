@@ -15,7 +15,7 @@ server.post("/users", (req, res) => {
     // Get the data the client sent
     const userData = req.body; // Express does not know how to parse JSON
 
-    if (!user.name || !user.bio) {
+    if (!userData.name || !userData.bio) {
         res
             .status(400)
             .json({ errorMessage: 'Please provide a name and bio for the user.' });
@@ -36,7 +36,7 @@ server.post("/users", (req, res) => {
                     console.log('error on POST /user', error);
                     res
                         .status(500)
-                        .json({ errorMessage: "There was an error while saving the user to the database" })
+                        .json({ errorMessage: 'There was an error while saving the user to the database' })
                 });
         })
 })
@@ -64,6 +64,7 @@ server.get("/users/:id", (req, res) => {
     db
         .findById(id)
         .then((user) => {
+            console.log(user);
             if (user) {
                 res
                     .status(200)
@@ -138,7 +139,7 @@ server.put("/users/:id", (req, res) => {
             } else {
                 res
                     .status(404)
-                    .json({ errorMessage: `The user with the specified ID does not exist.` });
+                    .json({ errorMessage: 'The user with the specified ID does not exist.' });
             }
         })
         .catch((error) => {
